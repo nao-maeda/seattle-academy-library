@@ -112,6 +112,11 @@ public class BooksService {
         jdbcTemplate.update(sql);
     }
 
+    /**
+     * 書籍登録時に書籍IDを取得する
+     * 
+     * @return　newId 書籍ID
+     */
     public int getNewId() {
 
         String sql = "SELECT MAX(ID) FROM books";
