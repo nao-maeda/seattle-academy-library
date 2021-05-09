@@ -31,13 +31,12 @@ public class BulkBookController {
 
     @Autowired
     private BooksService booksService;
-    
+
     @RequestMapping(value = "/bulkBook", method = RequestMethod.GET) //value＝actionで指定したパラメータ
     //RequestParamでname属性を取得
     public String login(Model model) {
         return "bulkBook";
     }
-    
 
     @Transactional
     @RequestMapping(value = "/insertBulkBook", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
@@ -46,16 +45,14 @@ public class BulkBookController {
             Model model) {
         logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 
-
         List<String[]> lines = new ArrayList<String[]>();
         String line = null;
         String[] bookData = new String[6];
         boolean mark = false;
         List<String> errorMsg = new ArrayList<String>();
-        try {
-            InputStream stream = csvFile.getInputStream();
-            Reader reader = new InputStreamReader(stream);
-            BufferedReader buf = new BufferedReader(reader);
+        try (InputStream stream = csvFile.getInputStream();
+                Reader reader = new InputStreamReader(stream);
+                BufferedReader buf = new BufferedReader(reader);) {
             int row = 0;
             while ((line = buf.readLine()) != null) {
                 row++;
@@ -76,7 +73,6 @@ public class BulkBookController {
                     mark = true;
                 }
 
-
                 if (bookData[4] != null && !(bookData[4].isEmpty())) {
                     boolean ISBNcheck = bookData[4].matches("^[0-9]+$");
                     int ISBNnum = bookData[4].length();
@@ -96,7 +92,6 @@ public class BulkBookController {
             model.addAttribute("error", errorMsg);
             return "bulkBook";
         }
-        
 
         // パラメータで受け取った書籍情報をDtoに格納する。
         for (int i = 0; i < lines.size(); i++) {
@@ -110,7 +105,7 @@ public class BulkBookController {
             //上書きされないように
             booksService.registBook(bookInfo);
         }
-        
+
         model.addAttribute("complete", "登録完了");
 
         return "bulkBook";
