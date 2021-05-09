@@ -133,8 +133,6 @@ public class AddBooksController {
 
         // 書籍情報を新規登録する
         booksService.registBook(bookInfo);
-        int num = booksService.getNewId();
-        bookInfo.setBookId(num);
 
         model.addAttribute("resultMessage", "登録完了");
 
