@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,14 +48,14 @@ public class BulkBookController {
 
         List<String[]> lines = new ArrayList<String[]>();
         String line = null;
-        String[] bookData = new String[6];
-        boolean mark = false;
+        boolean flag = false;
         List<String> errorMsg = new ArrayList<String>();
         try (InputStream stream = csvFile.getInputStream();
                 Reader reader = new InputStreamReader(stream);
                 BufferedReader buf = new BufferedReader(reader);) {
             int row = 0;
             while ((line = buf.readLine()) != null) {
+                String[] bookData = new String[6];
                 row++;
                 // カンマでlineを分割し、配列に格納する
                 int i = 0;
@@ -70,15 +71,15 @@ public class BulkBookController {
                     sdf.parse(bookData[3]);
                 } catch (Exception ex) {
                     errorMsg.add(row + "行目の出版日は半角数字のYYYYMMDD形式で入力してください。");
-                    mark = true;
+                    flag = true;
                 }
 
-                if (bookData[4] != null && !(bookData[4].isEmpty())) {
+                if (StringUtils.isEmpty(bookData[4])) {
                     boolean ISBNcheck = bookData[4].matches("^[0-9]+$");
                     int ISBNnum = bookData[4].length();
                     if (!ISBNcheck || !(ISBNnum == 10 || ISBNnum == 13)) {
                         errorMsg.add(row + "行目のISBNの桁数または半角数字が正しくありません。");
-                        mark = true;
+                        flag = true;
                     }
                 }
 
@@ -88,7 +89,7 @@ public class BulkBookController {
             e.printStackTrace();
         }
 
-        if (mark) {
+        if (flag) {
             model.addAttribute("error", errorMsg);
             return "bulkBook";
         }
