@@ -19,34 +19,36 @@
         </div>
         <div class="right">
             <ul>
-                <li><a href="<%= request.getContextPath()%>/home" class="menu">Home</a></li>
-                <li><a href="<%= request.getContextPath()%>/">ログアウト</a></li>
+                <li><a href="<%=request.getContextPath()%>/home" class="menu">Home</a></li>
+                <li><a href="<%=request.getContextPath()%>/">ログアウト</a></li>
             </ul>
         </div>
     </header>
     <main>
         <h1>Home</h1>
-        <a href="<%= request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a>
-        <a href="<%= request.getContextPath()%>/bulkBook" class="btn_bulk_book">一括登録</a>
-
+        <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a> 
+        <a href="<%=request.getContextPath()%>/bulkBook" class="btn_bulk_book">一括登録</a>
+        <form id="form1" action="<%=request.getContextPath()%>/searchBook">
+            <input type="radio" name="checkBox" value="perfectMatching" checked><span>完全一致</span>
+            <input type="radio" name="checkBox" value="partialMatching"><span>部分一致</span>
+            <input name="searchTitle" type="text" placeholder="キーワードを入力" />
+            <input id="sbtn" type="submit" value="検索" />
+        </form>
         <div class="content_body">
-            <c:if test="${!empty resultMessage}">
-                <div class="error_msg">${resultMessage}</div>
+            <c:if test="${!empty error}">
+                <div class="error_msg">${error}</div>
             </c:if>
             <div>
                 <div class="booklist">
                     <c:forEach var="bookInfo" items="${bookList}">
                         <div class="books">
                             <form method="post" class="book_thumnail" action="<%=request.getContextPath()%>/details">
-                                <a href="javascript:void(0)" onclick="this.parentNode.submit();">
-                                    <c:if test="${empty bookInfo.thumbnail}">
+                                <a href="javascript:void(0)" onclick="this.parentNode.submit();"> <c:if test="${empty bookInfo.thumbnail}">
                                         <img class="book_noimg" src="resources/img/noImg.png">
-                                    </c:if>
-                                    <c:if test="${!empty bookInfo.thumbnail}">
+                                    </c:if> <c:if test="${!empty bookInfo.thumbnail}">
                                         <img class="book_noimg" src="${bookInfo.thumbnail}">
                                     </c:if>
-                                </a>
-                            <input type="hidden" name="bookId" value="${bookInfo.bookId}">
+                                </a> <input type="hidden" name="bookId" value="${bookInfo.bookId}">
                             </form>
                             <ul>
                                 <li class="book_title">${bookInfo.title}</li>

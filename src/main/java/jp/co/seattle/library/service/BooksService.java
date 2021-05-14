@@ -126,4 +126,38 @@ public class BooksService {
         return newId;
     }
 
+    /**
+     * 検索した書籍を取得する
+     * 完全一致
+     *
+     * @return 書籍リスト
+     */
+    public List<BookInfo> perfSearchBookList(String searchTitle) {
+
+        // TODO 取得したい情報を取得するようにSQLを修正
+        List<BookInfo> searchedBookList = jdbcTemplate.query(
+                "select id,title,author,publisher,publish_date,thumbnail_url from books WHERE title like'"
+                        + searchTitle + "'ORDER BY title asc",
+                new BookInfoRowMapper());
+
+        return searchedBookList;
+    }
+
+    /**
+     * 検索した書籍を取得する
+     * 部分一致
+     *
+     * @return 書籍リスト
+     */
+    public List<BookInfo> partSearchBookList(String searchTitle) {
+
+        // TODO 取得したい情報を取得するようにSQLを修正
+        List<BookInfo> searchedBookList = jdbcTemplate.query(
+                "select id,title,author,publisher,publish_date,thumbnail_url from books WHERE title like '%"
+                        + searchTitle + "%' ORDER BY title asc",
+                new BookInfoRowMapper());
+
+        return searchedBookList;
+    }
+
 }
