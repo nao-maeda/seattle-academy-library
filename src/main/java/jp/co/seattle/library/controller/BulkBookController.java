@@ -48,7 +48,7 @@ public class BulkBookController {
 
         List<String[]> lines = new ArrayList<String[]>();
         String line = null;
-        boolean hasNotError = false;
+        boolean hasError = false;
         List<String> errorMsg = new ArrayList<String>();
         try (InputStream stream = csvFile.getInputStream();
                 Reader reader = new InputStreamReader(stream);
@@ -71,7 +71,7 @@ public class BulkBookController {
                     sdf.parse(bookData[3]);
                 } catch (Exception ex) {
                     errorMsg.add(row + "行目の出版日は半角数字のYYYYMMDD形式で入力してください。");
-                    hasNotError = true;
+                    hasError = true;
                 }
 
                 if (StringUtils.isEmpty(bookData[4])) {
@@ -79,7 +79,7 @@ public class BulkBookController {
                     int ISBNnum = bookData[4].length();
                     if (!ISBNcheck || !(ISBNnum == 10 || ISBNnum == 13)) {
                         errorMsg.add(row + "行目のISBNの桁数または半角数字が正しくありません。");
-                        hasNotError = true;
+                        hasError = true;
                     }
                 }
 
@@ -89,7 +89,7 @@ public class BulkBookController {
             e.printStackTrace();
         }
 
-        if (hasNotError) {
+        if (hasError) {
             model.addAttribute("error", errorMsg);
             return "bulkBook";
         }

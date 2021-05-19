@@ -21,6 +21,16 @@ public class SearchBookController {
     @Autowired
     private BooksService booksService;
 
+    /**
+     * 検索機能
+     * 完全一致と部分一致で分岐
+     * 
+     * @param locale
+     * @param searchTitle
+     * @param checkBox
+     * @param model
+     * @return home
+     */
     @Transactional
     @RequestMapping(value = "/searchBook", method = RequestMethod.GET)
     public String transitionHome(Locale locale,
@@ -33,13 +43,13 @@ public class SearchBookController {
         //検索結果を表示
         if (checkBox.equals("perfectMatching")) {
             if (booksService.perfSearchBookList(searchTitle).isEmpty()) {
-                model.addAttribute("error", "検索結果が一致していません。");
+                model.addAttribute("searchError", "検索結果は0件です。");
             } else {
                 model.addAttribute("bookList", booksService.perfSearchBookList(searchTitle));
             }
         } else if (checkBox.equals("partialMatching")) {
             if (booksService.partSearchBookList(searchTitle).isEmpty()) {
-                model.addAttribute("error", "検索結果が一致していません。");
+                model.addAttribute("searchError", "検索結果は0件です。");
             } else {
                 model.addAttribute("bookList", booksService.partSearchBookList(searchTitle));
             }

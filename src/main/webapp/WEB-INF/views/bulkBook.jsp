@@ -21,7 +21,7 @@
     <header>
             
         <div class="left">
-                  <img class="hasNotError" src="resources/img/logo.png" />       
+                  <img class="hasError" src="resources/img/logo.png" />       
             <div class="logo">Seattle Library</div>
                 
         </div>
