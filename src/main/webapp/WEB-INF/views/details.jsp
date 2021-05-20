@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="resources/css/lightbox.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="resources/js/lightbox.js" /></script>
+<script src="resources/js/deleteCheck.js" /></script>
 </head>
 <body class="wrapper">
     <header>
@@ -85,7 +86,7 @@
                 <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_editBook">編集</button>
             </form>
              <form method="post" action="deleteBook">
-                <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_deleteBook">削除</button>
+                <button id=deleteButton type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_deleteBook">削除</button>
             </form>
         </div>
     </main>
