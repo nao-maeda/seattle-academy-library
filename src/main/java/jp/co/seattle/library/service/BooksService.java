@@ -150,7 +150,7 @@ public class BooksService {
      * 検索した書籍を取得する
      * 部分一致
      * 
-     * @param searchTitle
+     * @param searchTitle 検索した書籍名
      * @return 書籍リスト
      */
     public List<BookInfo> partSearchBookList(String searchTitle) {

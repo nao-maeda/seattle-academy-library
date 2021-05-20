@@ -26,10 +26,10 @@ public class SearchBookController {
      * 完全一致と部分一致で分岐
      * 
      * @param locale
-     * @param searchTitle
-     * @param checkBox
-     * @param model
-     * @return home
+     * @param searchTitle 検索した書籍名
+     * @param checkBox 検索方法
+     * @param model 
+     * @return home ホーム画面に表示
      */
     @Transactional
     @RequestMapping(value = "/searchBook", method = RequestMethod.GET)
