@@ -99,7 +99,7 @@ public class EditBooksController {
          * @return true:正しい日付　false:不正な日付
          */
 
-        boolean mark = false;
+        boolean hasError = false;
 
         try {
             // 日付チェック
@@ -109,7 +109,7 @@ public class EditBooksController {
             bookInfo.setPublishDate(publishDate);
         } catch (Exception ex) {
             model.addAttribute("error", "出版日は半角数字のYYYYMMDD形式で入力してください。");
-            mark = true;
+            hasError = true;
         }
 
         boolean ISBNcheck = ISBN.matches("^[0-9]+$");
@@ -118,11 +118,11 @@ public class EditBooksController {
         if (!StringUtils.isEmpty(ISBN)) {
             if (!ISBNcheck || !(ISBNnum == 10 || ISBNnum == 13)) {
                 model.addAttribute("error2", "ISBNの桁数または半角数字が正しくありません。");
-                mark = true;
+                hasError = true;
             }
         }
 
-        if (mark) {
+        if (hasError) {
             return "addBook";
         }
 
