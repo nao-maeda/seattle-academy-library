@@ -10,6 +10,8 @@
 <link href="<c:url value="/resources/css/default.css" />" rel="stylesheet" type="text/css">
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 <link href="<c:url value="/resources/css/home.css" />" rel="stylesheet" type="text/css">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="resources/js/sort.js" /></script>
 </head>
 <body class="wrapper">
     <header>
@@ -28,6 +30,13 @@
         <h1>Home</h1>
         <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a> 
         <a href="<%=request.getContextPath()%>/bulkBook" class="btn_bulk_book">一括登録</a>
+        <select id=item>
+            <option value="${bookInfo.title}">書籍名</option>
+            <option value="${bookInfo.author}">著者名</option>
+            <option value="2">出版社</option>
+            <option value="3">出版日</option>
+        </select>
+        
         <form id="form1" action="<%=request.getContextPath()%>/searchBook">
             <input id="checkbtn" type="radio" name="checkBox" value="perfectMatching" checked><span>完全一致</span>
             <input id="checkbtn" type="radio" name="checkBox" value="partialMatching"><span>部分一致</span>
