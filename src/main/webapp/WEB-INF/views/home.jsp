@@ -31,11 +31,13 @@
         <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a> 
         <a href="<%=request.getContextPath()%>/bulkBook" class="btn_bulk_book">一括登録</a>
         <select id=item>
-            <option value="${bookInfo.title}">書籍名</option>
-            <option value="${bookInfo.author}">著者名</option>
+            <option value="0">書籍名</option>
+            <option value="1">著者名</option>
             <option value="2">出版社</option>
             <option value="3">出版日</option>
         </select>
+        <input id="ascbtn" class="sortbtn" type="radio" name="sortCheckBox" value="asc" checked><span>昇順</span> 
+        <input id="descbtn" class="sortbtn" type="radio" name="sortCheckBox" value="desc"><span>降順</span>
         
         <form id="form1" action="<%=request.getContextPath()%>/searchBook">
             <input id="checkbtn" type="radio" name="checkBox" value="perfectMatching" checked><span>完全一致</span>
@@ -49,6 +51,7 @@
             </c:if>
             <div>
                 <div class="booklist">
+                
                     <c:forEach var="bookInfo" items="${bookList}">
                         <div class="books">
                             <form method="post" class="book_thumnail" action="<%=request.getContextPath()%>/details">
